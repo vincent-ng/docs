@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+
+    wordpress:
+      image: wordpress:4.9.5-fpm-alpine
+      environment:
+        WORDPRESS_DB_PASSWORD: example
+
+    nginx:
+      image: raulr/nginx-wordpress
+      links:
+        - wordpress
+      volumes_from:
+        - wordpress
+      ports:
+        - "8080:80"
+
+    mysql:
+      image: mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: example
