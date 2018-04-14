@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
 
@@ -6,13 +6,13 @@ services:
       image: wordpress:4.9.5-fpm-alpine
       environment:
         WORDPRESS_DB_PASSWORD: example
+      volumes:
+        - wordpress_files:/var/www/html
 
     nginx:
       image: raulr/nginx-wordpress
-      links:
-        - wordpress
-      volumes_from:
-        - wordpress
+      volumes:
+        - wordpress_files:/var/www/html
       ports:
         - "8080:80"
 
@@ -20,3 +20,6 @@ services:
       image: mysql
       environment:
         MYSQL_ROOT_PASSWORD: example
+
+volumes:
+  wordpress_files:
